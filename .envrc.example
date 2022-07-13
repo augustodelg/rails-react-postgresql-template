@@ -1,0 +1,3 @@
+export USER_ID="$(id -u):101" \
+       PATH=$PWD/docker/bin:$PATH \
+       DOCKER_BUILDKIT=1
