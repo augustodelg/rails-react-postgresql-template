@@ -1,0 +1,5 @@
+FROM node:16-alpine3.11 as node
+RUN mkdir /.npm && chmod 777 /.npm
+RUN mkdir -p /app && chown node:node /app
+USER node
+WORKDIR /app

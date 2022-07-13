@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  node:
+    user: $USER_ID
+    image: node-dev
+    build: 
+      context: ./front-end
+    command: [npm, run, start]
+    ports:
+      - 3000:3000
+    env_file:
+        - .env
+    volumes:
+      - ./front-end:/app
+      - npm-cache:/.npm
+  db:
+    image: postgres:13
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - db_dsa:/var/lib/postgresql/data
+  backend:
+    user: $USER_ID
+    build: 
+      context: ./back-end
+    command: bash -c "rm -f tmp/pids/server.pid && bin/rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./back-end:/myapp
+    env_file: .env
+    ports:
+      - "3002:3000"
+volumes:
+  npm-cache:
+  db_dsa:
