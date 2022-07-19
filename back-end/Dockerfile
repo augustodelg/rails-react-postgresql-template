@@ -6,7 +6,7 @@ WORKDIR /myapp
 RUN gem install bundler:2.3.9
 
 COPY Gemfile /myapp/Gemfile
-#COPY Gemfile.lock /myapp/Gemfile.lock
+COPY Gemfile.lock /myapp/Gemfile.lock
 
 RUN bundle install
 EXPOSE 3000
