@@ -14,6 +14,18 @@ services:
     volumes:
       - ./front-end:/app
       - npm-cache:/.npm
+    restart: on-failure
+  utils-node:
+    user: $USER_ID
+    image: node-dev
+    env_file:
+        - .env
+    build: 
+      context: ./front-end
+    command: ["tail", "-f", "/dev/null"]
+    volumes:
+      - ./front-end:/app
+      - npm-cache:/.npm
   db:
     image: postgres:13
     env_file: .env
